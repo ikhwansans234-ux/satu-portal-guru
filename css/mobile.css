@@ -1,0 +1,88 @@
+/* ===== Tampilan HP (layar <= 700px) ===== */
+#bnav{display:none}
+#scrim{display:none}
+@media(max-width:700px){
+html,body{overflow-x:hidden}
+main{min-width:0;width:100%}
+#app{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+#view{padding-bottom:84px}
+
+/* bagian atas */
+.top{position:sticky;top:0;z-index:4;padding:8px 12px 10px}
+.bar{gap:4px}
+#school{display:none}
+.bar .sp{flex:1}
+.ic{min-width:40px;height:40px}
+#out{font-size:12px;padding:0 12px}
+.crumb{margin-top:2px}.crumb small{font-size:18px}.crumb b{font-size:10.5px}
+.card{margin:10px;padding:14px;border-radius:10px}
+
+/* form: huruf 16px agar tidak diperbesar otomatis di iPhone, area sentuh lebar */
+.in,input,select,textarea{font-size:16px}
+.in,.ctrl input,.ctrl select,select,input:not([type=checkbox]):not([type=radio]){min-height:44px}
+.btn{min-height:44px}.btn.sm{min-height:36px}
+.ctrl{gap:8px}
+
+/* menu samping (laci) */
+aside{width:80%;max-width:300px;margin-left:-100%;z-index:8}
+aside.on{margin-left:0}
+#scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:7}
+aside.on~#scrim{display:block}
+nav a{padding:14px 20px}
+
+/* menu bawah */
+#app:not(.hide)~#bnav{display:flex}
+#bnav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);padding:4px 4px calc(4px + env(safe-area-inset-bottom,0px))}
+#bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px;font-size:11px;color:var(--muted);border-radius:8px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#bnav a.act{color:var(--primary);font-weight:700;background:var(--sel)}
+#bnav svg{width:22px;height:22px}
+.toast{bottom:calc(82px + env(safe-area-inset-bottom,0px));max-width:92%;text-align:center}
+
+/* tabel menjadi kartu */
+.tw{overflow:visible}
+.tw table{display:block;min-width:0;width:100%;border:0}
+.tw thead{display:none}
+.tw tbody{display:block}
+.tw tbody tr{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 12px;margin-bottom:10px}
+.tw tbody tr:hover{background:var(--card)}
+.tw tbody td{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border:0;border-bottom:1px dashed var(--line);text-align:right;white-space:normal;min-height:36px}
+.tw tbody td:last-child{border-bottom:0}
+.tw tbody td::before{content:attr(data-label);flex:none;max-width:42%;text-align:left;color:var(--muted);font-size:12px;font-weight:600}
+.tw tbody td:not([data-label])::before,.tw tbody td[data-label=""]::before{content:none}
+.tw tbody td[colspan]{display:block;text-align:center}
+.tw tbody td[data-label="No"]{display:none}
+.tw tbody td .btn{flex:none}
+
+/* absensi: nama di atas, pilihan H/S/I/A besar, keterangan di bawah */
+#tb td:nth-child(1),#tb td:nth-child(2),#tb td:nth-child(4){display:none}
+#tb td:nth-child(3){display:block;text-align:left;font-weight:700;font-size:15px;border:0;padding-bottom:2px}
+#tb td:nth-child(3)::before{content:none}
+#tb td.st{display:flex;gap:6px;border:0}
+#tb td.st::before{content:none}
+#tb .st label{position:relative;flex:1;display:flex;justify-content:center;align-items:center;padding:11px 0;border:1px solid var(--line);border-radius:8px;font-weight:600}
+#tb .st input{position:absolute;opacity:0;inset:0;margin:0;width:100%;height:100%}
+#tb .st label:has(input:checked){background:var(--sel);border-color:var(--primary);color:var(--primary)}
+#tb td:nth-child(6){display:block;border:0}
+#tb td:nth-child(6)::before{content:none}
+#tb td:nth-child(6) input{width:100%}
+#save,#gsave{position:fixed;left:12px;right:12px;bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:6;box-shadow:0 6px 18px rgba(0,0,0,.25);flex:none;width:auto}
+#save.hide,#gsave.hide{display:none}
+
+/* nilai: kolom diatur dua-dua */
+#gb tr{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px}
+#gb td{display:flex;flex-direction:column;align-items:stretch;gap:3px;text-align:left;border:0;padding:6px 0}
+#gb td:nth-child(1){display:none}
+#gb td:nth-child(2){grid-column:1/-1;flex-direction:row;font-weight:700;font-size:15px}
+#gb td:nth-child(2)::before{content:none}
+#gb td input.cell{width:100%}
+
+/* rekap absensi: empat angka sejajar */
+#rb tr{display:grid;grid-template-columns:repeat(4,1fr);gap:0 4px}
+#rb td{flex-direction:column;align-items:center;gap:2px;text-align:center;border:0;padding:6px 0}
+#rb td:nth-child(2){grid-column:1/-1;flex-direction:row;justify-content:flex-start;font-weight:700;font-size:15px}
+#rb td:nth-child(2)::before{content:none}
+#rb td:nth-child(7){grid-column:1/-1;flex-direction:row;justify-content:space-between}
+#rb td:nth-child(7)::before{content:none}
+
+.stats{grid-template-columns:1fr 1fr}
+}

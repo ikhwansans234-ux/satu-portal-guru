@@ -1,0 +1,171 @@
+/* ===== Halaman login: tampilan hidup dengan animasi =====
+   Dimuat paling akhir agar menimpa login.css / theme.css.
+   Semua animasi hanya memakai transform/opacity, dan dimatikan
+   untuk pengguna yang memilih "kurangi gerakan" (lihat paling bawah). */
+
+/* ---------- latar halaman ---------- */
+#login{
+  background:
+    radial-gradient(900px 520px at 10% 6%,rgba(31,95,77,.18),transparent 60%),
+    radial-gradient(760px 520px at 95% 96%,rgba(201,151,43,.20),transparent 60%),
+    var(--bg);
+}
+#login:before,#login:after{display:block;filter:blur(30px);opacity:.55}
+#login:before{width:300px;height:300px;left:-90px;top:8%;background:rgba(47,125,101,.28);animation:lxdrift 16s ease-in-out infinite}
+#login:after{width:260px;height:260px;right:-70px;bottom:6%;background:rgba(201,151,43,.30);animation:lxdrift 19s ease-in-out infinite reverse}
+@keyframes lxdrift{50%{transform:translate(40px,-34px) scale(1.12)}}
+
+.bgfx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.bgfx:before{ /* pola bintang segi delapan, bergeser pelan */
+  content:"";position:absolute;inset:-64px;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%232f7d65' stroke-width='1.2'%3E%3Crect x='14' y='14' width='36' height='36'/%3E%3Crect x='14' y='14' width='36' height='36' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E");
+  animation:lxpan 40s linear infinite;
+}
+@keyframes lxpan{to{transform:translate(64px,64px)}}
+.fi{position:absolute;top:100%;left:var(--x);width:var(--s);height:var(--s);color:var(--primary);opacity:0;
+  animation:lxfloat var(--d) linear infinite;animation-delay:var(--l)}
+@keyframes lxfloat{
+  0%{transform:translate3d(0,0,0) rotate(0);opacity:0}
+  10%,85%{opacity:.17}
+  100%{transform:translate3d(var(--dx),-125vh,0) rotate(var(--r));opacity:0}}
+
+/* ---------- kartu login ---------- */
+.wrap{box-shadow:0 30px 70px -28px rgba(23,56,47,.45),0 2px 0 rgba(255,255,255,.4) inset;
+  animation:lxrise .8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes lxrise{from{opacity:0;transform:translateY(26px) scale(.98)}}
+
+/* ---------- panel kiri (hero) ---------- */
+.hero{--hx:38px;--hy:44px;padding:var(--hy) var(--hx);
+  background:linear-gradient(140deg,#10291f,#1c5846 48%,#14352b 75%,#1b4f3d);background-size:220% 220%;
+  animation:lxgrad 16s ease-in-out infinite}
+@keyframes lxgrad{50%{background-position:100% 100%}}
+.hero:before{display:block}
+.hero .orb{display:block;background:radial-gradient(circle,rgba(227,194,122,.30),transparent 68%);
+  translate:calc(var(--mx,0)*-14px) calc(var(--my,0)*-14px);transition:translate .3s ease-out}
+.hero .o1{width:300px;height:300px;right:-110px;bottom:-110px;animation:lxdrift 14s ease-in-out infinite}
+.hero .o2{width:170px;height:170px;right:40px;top:-60px;animation:lxdrift 11s ease-in-out infinite reverse}
+
+.hero .pt{position:absolute;left:var(--x);top:100%;width:var(--s);height:var(--s);border-radius:50%;
+  background:#e3c27a;box-shadow:0 0 10px 2px rgba(227,194,122,.6);opacity:0;
+  animation:lxpt var(--d) linear infinite;animation-delay:var(--l)}
+@keyframes lxpt{0%{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.85}100%{transform:translate(var(--dx),-640px) scale(1);opacity:0}}
+
+/* logo: melayang, dengan cahaya dan cincin berputar */
+.logo{position:relative;margin:10px 0 18px 14px;
+  translate:calc(var(--mx,0)*10px) calc(var(--my,0)*10px);transition:translate .3s ease-out}
+.logo:before{content:"";position:absolute;inset:-34px;border-radius:50%;
+  background:radial-gradient(circle,rgba(227,194,122,.42),transparent 66%);animation:lxhalo 3.8s ease-in-out infinite}
+.logo:after{content:"";position:absolute;inset:-16px;border-radius:50%;
+  border:1.5px dashed rgba(227,194,122,.6);animation:lxspin 30s linear infinite}
+.logo img{position:relative;z-index:1;animation:lxbob 5s ease-in-out infinite}
+@keyframes lxhalo{50%{transform:scale(1.18);opacity:.6}}
+@keyframes lxspin{to{transform:rotate(360deg)}}
+@keyframes lxbob{50%{transform:translateY(-7px)}}
+
+.gt{background:linear-gradient(100deg,#e3c27a 20%,#fff6dc 45%,#e3c27a 70%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:lxshine 4.5s linear infinite}
+@keyframes lxshine{to{background-position:-220% 0}}
+
+/* daftar fitur menyala bergantian */
+.feat li{animation:lxfeat 9s ease-in-out infinite}
+.feat li:nth-child(2){animation-delay:3s}.feat li:nth-child(3){animation-delay:6s}
+@keyframes lxfeat{
+  0%,30%{background:rgba(227,194,122,.13);transform:translateX(8px);box-shadow:inset 3px 0 0 #e3c27a}
+  36%,100%{background:transparent;transform:none;box-shadow:inset 0 0 0 transparent}}
+.feat li:hover{transform:translateX(8px)}
+
+/* teks berjalan di dasar panel */
+.ticker{margin:auto calc(var(--hx)*-1) calc(var(--hy)*-1);padding:11px 0;overflow:hidden;white-space:nowrap;
+  background:rgba(0,0,0,.22);border-top:1px solid rgba(255,255,255,.12)}
+.ticker .tk{display:inline-flex;animation:lxtick 26s linear infinite;will-change:transform}
+.ticker span{font-size:11.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#e3c27a;padding:0 18px;opacity:.9}
+.ticker span:after{content:"\2726";margin-left:36px;color:rgba(255,255,255,.35)}
+@keyframes lxtick{to{transform:translateX(-50%)}}
+
+/* urutan muncul panel kiri */
+.hero>.logo,.hero>.badge,.hero>h1,.hero>p,.hero>.feat{animation-name:lxup;animation-duration:.7s;animation-fill-mode:both;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+.hero>.badge{animation-delay:.15s}.hero>h1{animation-delay:.25s}.hero>p{animation-delay:.35s}.hero>.feat{animation-delay:.45s}
+@keyframes lxup{from{opacity:0;transform:translateY(16px)}}
+
+/* ---------- panel kanan (form) ---------- */
+.form{position:relative;overflow:hidden}
+.deco{position:absolute;color:var(--primary);pointer-events:none}
+.deco.d1{width:190px;height:190px;top:-62px;right:-62px;opacity:.13;animation:lxspin 60s linear infinite}
+.deco.d2{width:120px;height:120px;bottom:-34px;left:-34px;opacity:.10;color:var(--amber);animation:lxspin 45s linear infinite reverse}
+
+.clock{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-bottom:16px;padding:6px 13px;
+  border-radius:20px;background:var(--sel);color:var(--primary);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.clock i{width:8px;height:8px;border-radius:50%;background:#2e9e6b;box-shadow:0 0 0 0 rgba(46,158,107,.6);animation:lxping 2s ease-out infinite}
+@keyframes lxping{70%{box-shadow:0 0 0 8px rgba(46,158,107,0)}100%{box-shadow:0 0 0 0 rgba(46,158,107,0)}}
+
+.form>:not(.deco){animation:lxup .6s cubic-bezier(.2,.8,.2,1) both}
+.form>:nth-child(3){animation-delay:.10s}.form>:nth-child(4){animation-delay:.16s}.form>:nth-child(5){animation-delay:.22s}
+.form>:nth-child(6){animation-delay:.28s}.form>:nth-child(7){animation-delay:.34s}.form>:nth-child(8){animation-delay:.40s}
+.form>:nth-child(9){animation-delay:.46s}.form>:nth-child(10){animation-delay:.52s}.form>:nth-child(11){animation-delay:.58s}
+.form>:nth-child(12){animation-delay:.64s}.form>:nth-child(13){animation-delay:.70s}
+
+.fld .in{transition:border-color .2s,box-shadow .25s,background .2s}
+.fld .in:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(31,95,77,.16),0 10px 22px -12px rgba(31,95,77,.55)}
+.fld .ico{transition:color .2s,transform .25s}
+.fld:focus-within .ico{transform:translateY(-50%) scale(1.18)}
+.form label{transition:color .2s}
+.fld:focus-within{--lbl:1}
+
+/* tombol login: kilau, melayang, dan indikator memuat */
+.btn.full{position:relative;overflow:hidden;background:linear-gradient(135deg,#1f5f4d,#2b8a6e);
+  box-shadow:0 12px 24px -12px rgba(31,95,77,.8);transition:transform .18s,box-shadow .25s}
+.btn.full:after{content:"";position:absolute;inset:0;transform:translateX(-130%);
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.30) 50%,transparent 70%);
+  animation:lxsweep 3.8s ease-in-out 1.4s infinite}
+@keyframes lxsweep{0%{transform:translateX(-130%)}35%,100%{transform:translateX(130%)}}
+.btn.full:hover{transform:translateY(-2px);box-shadow:0 16px 28px -12px rgba(31,95,77,.9)}
+.btn.full:active{transform:translateY(0)}
+.btn.full.busy{pointer-events:none;filter:saturate(.85)}
+.btn.full.busy svg{display:none}
+.btn.full.busy:before{content:"";width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:lxspin .7s linear infinite}
+
+.msg:not(:empty){animation:lxshake .4s}
+@keyframes lxshake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+/* ---------- HP ---------- */
+@media(max-width:700px){
+  .hero{--hx:22px;--hy:26px}
+  .logo{margin:6px 0 12px 8px}.logo:before{inset:-26px}.logo:after{inset:-12px}
+  .ticker{margin-top:16px}
+  .fi:nth-child(n+6){display:none}
+  .deco.d1{width:140px;height:140px;top:-48px;right:-48px}
+}
+
+/* ---------- hormati pengaturan "kurangi gerakan" ---------- */
+@media(prefers-reduced-motion:reduce){
+  #login:before,#login:after,.bgfx:before,.fi,.wrap,.hero,.hero .orb,.hero .pt,.logo:before,.logo:after,.logo img,.gt,
+  .feat li,.ticker .tk,.hero>*,.form>*,.deco,.clock i,.btn.full:after,.msg{animation:none!important}
+  .fi,.hero .pt{display:none}
+  .gt{color:#e3c27a;background:none}
+  .form>*,.hero>*{opacity:1!important}
+}
+
+/* ===== Latar bergerak yang sama, dibawa ke halaman setelah login =====
+   Lapisan ini berada di belakang seluruh isi (z-index:-1) dan menempel di layar,
+   sehingga tidak ikut bergulir dan tidak mengubah susunan sidebar/menu bawah.
+   Ikon, pola bintang, dan bola cahaya memakai animasi yang sama dengan halaman login. */
+#app>.bgfx.appfx{position:fixed;inset:0;z-index:-1}
+#app:before,#app:after{content:"";position:fixed;z-index:-1;border-radius:50%;pointer-events:none;filter:blur(30px);opacity:.55}
+#app:before{width:320px;height:320px;left:-90px;top:10%;background:rgba(47,125,101,.28);animation:lxdrift 16s ease-in-out infinite}
+#app:after{width:280px;height:280px;right:-70px;bottom:6%;background:rgba(201,151,43,.30);animation:lxdrift 19s ease-in-out infinite reverse}
+/* kilau warna lembut seperti latar login: dipasang pada lapisan latar itu sendiri,
+   bukan pada #app, karena latar #app akan tergambar di atas lapisan z-index:-1 */
+#app>.bgfx.appfx{background:
+    radial-gradient(900px 520px at 10% 6%,rgba(31,95,77,.14),transparent 60%),
+    radial-gradient(760px 520px at 95% 96%,rgba(201,151,43,.16),transparent 60%)}
+
+/* bilah atas dan kartu dibuat sedikit tembus pandang supaya animasi tetap terlihat.
+   (tanpa backdrop-filter agar tombol "Simpan" yang melayang di HP tetap berfungsi normal) */
+.top{background:color-mix(in srgb,var(--card) 80%,transparent)}
+.card{background:color-mix(in srgb,var(--card) 93%,transparent)}
+
+@media(prefers-reduced-motion:reduce){
+  #app:before,#app:after,#app>.bgfx:before,#app .fi{animation:none!important}
+  #app .fi{display:none}
+}
+@media print{#app>.bgfx,#app:before,#app:after{display:none!important}.top,.card{background:#fff}}

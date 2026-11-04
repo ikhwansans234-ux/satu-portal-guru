@@ -1,0 +1,72 @@
+/* ===== Tema baru: hijau madrasah, datar dan bersih ===== */
+:root{--bg:#f3f0e8;--card:#fff;--text:#1f2a26;--muted:#6b756f;--line:#dfdacd;--primary:#1f5f4d;--pd:#1f5f4d;--green:#1f5f4d;--row:#f7f5ef;--sel:#e4efe9;--side:#17382f;--amber:#c9972b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111815;--card:#1a2420;--text:#e6ece8;--muted:#92a198;--line:#2c3a34;--primary:#4aa385;--pd:#7cc9ad;--green:#2f7d65;--row:#202c27;--sel:#25382f;--side:#0d1512}}
+:root[data-theme="dark"]{--bg:#111815;--card:#1a2420;--text:#e6ece8;--muted:#92a198;--line:#2c3a34;--primary:#4aa385;--pd:#7cc9ad;--green:#2f7d65;--row:#202c27;--sel:#25382f;--side:#0d1512}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;font-size:14px;line-height:1.5}
+h1,h2,h3,.crumb b,.stat b{font-family:Georgia,"Times New Roman",serif;font-weight:700}
+/* tombol */
+.btn{border-radius:6px;text-transform:none;font-size:13.5px;font-weight:600;padding:10px 18px;background:var(--primary);color:#fff;box-shadow:none;letter-spacing:0}
+.btn.sm{padding:6px 11px;font-size:12.5px}
+.btn.g{background:var(--primary)}.btn.o{background:var(--amber);color:#2b2108}.btn.r{background:#b3402f}
+.btn.line{background:transparent;color:var(--primary);border:1px solid var(--primary)}
+.btn:hover{filter:brightness(1.08)}
+.in,.ctrl select,.ctrl input{border-radius:6px;padding:10px 12px}
+.in:focus,.ctrl input:focus,.ctrl select:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(31,95,77,.18)}
+/* login */
+#login{background:var(--bg)}#login:before,#login:after,.hero:before,.hero .orb{display:none}
+.wrap{border-radius:10px;box-shadow:none;border:1px solid var(--line);animation:none;max-width:880px}
+.hero{background:var(--side);gap:14px;padding:44px 38px}
+.logo{width:60px;height:60px;border-radius:8px;background:var(--amber);color:#2b2108;border:0;box-shadow:none;animation:none;backdrop-filter:none;font-family:Georgia,serif;font-size:17px}
+.badge{background:none;border:0;padding:0;border-radius:0;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#e3c27a}
+.hero h1{font-size:27px}.hero p{opacity:.8}
+.feat{gap:0;margin-top:10px}
+.feat li{background:none;border:0;border-top:1px solid rgba(255,255,255,.14);border-radius:0;padding:12px 0;transition:none}
+.feat li:hover{transform:none;background:none}
+.feat span{background:none;width:auto;height:auto;color:#e3c27a}
+.form{padding:44px 38px}.form h2{font-size:25px}
+.fld .in{padding-top:11px;padding-bottom:11px}.fld .in:focus{background:transparent}
+.btn.full{background:var(--primary);box-shadow:none;border-radius:6px;padding:12px;letter-spacing:0;transition:none}
+.btn.full:hover{transform:none;box-shadow:none}
+.msg:not(:empty){background:#f6e4e0;color:#8e2f20;border-radius:6px;animation:none}
+/* sidebar */
+aside{background:var(--side);border-right:0}
+.prof{border-bottom:1px solid rgba(255,255,255,.12);padding:26px 16px 18px;text-align:left;display:grid;grid-template-columns:48px 1fr;column-gap:12px;align-items:center}
+.ava{width:48px;height:48px;margin:0;border-radius:8px;background:var(--amber);color:#2b2108;font-size:17px;font-family:Georgia,serif;grid-row:span 2}
+.prof b{color:#fff;text-transform:none;letter-spacing:0;font-size:14px;align-self:end}.prof small{color:rgba(255,255,255,.6);align-self:start}
+nav{padding:14px 0}
+nav a{border-radius:0;padding:11px 20px;margin:0;text-transform:none;font-size:14px;font-weight:500;color:rgba(255,255,255,.72);border-left:3px solid transparent}
+nav a i{display:none}
+nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+nav a.act{background:rgba(255,255,255,.1);color:#fff;border-left-color:var(--amber)}
+/* bagian atas */
+.top{background:var(--card);color:var(--text);padding:12px 22px;border-bottom:1px solid var(--line)}
+.bar{font-size:13px;font-weight:600;letter-spacing:.3px;color:var(--muted);text-transform:uppercase}
+.ic{color:var(--text);font-size:18px;border-radius:6px}.ic:hover{background:var(--row)}
+#out{font-size:13px;border:1px solid var(--line);padding:5px 12px}
+.crumb{margin-top:6px}.crumb b{display:block;font-size:11.5px;letter-spacing:1.5px;color:var(--amber);font-family:inherit;font-weight:700}.crumb small{display:block;font-size:22px;font-family:Georgia,"Times New Roman",serif;font-weight:700;color:var(--text);margin-top:2px}
+/* konten */
+.card{margin:20px;border-radius:8px;box-shadow:none;border:1px solid var(--line);padding:20px}
+th{color:var(--muted);text-transform:none;font-size:12.5px;font-weight:600;background:var(--row);padding:11px 12px}
+td{padding:11px 12px}
+tbody tr:hover{background:var(--row)}
+.chip{border-radius:4px;background:var(--sel);color:var(--text);font-weight:500}
+.stat{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:6px;padding:14px 16px}
+.stats .stat:nth-child(even){border-left-color:var(--amber)}
+.stat b{font-size:28px}
+.bar2{height:6px;border-radius:3px}.bar2 i{background:var(--primary)}
+td input.cell{border-radius:5px}
+h3{font-size:17px;margin:22px 0 8px}
+.toast{background:#17382f;border-radius:6px}
+.eye:hover{background:var(--row)}
+@media(max-width:700px){.card{margin:12px;padding:14px}.hero{padding:26px 22px}.form{padding:26px 22px}.crumb small{font-size:19px}
+nav a{padding:13px 20px}}
+
+.syn{font-size:12px;color:var(--muted);cursor:pointer;padding:4px 10px;border:1px solid var(--line);border-radius:20px;white-space:nowrap}
+.syn:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--muted);margin-right:6px}
+.syn[data-s=ok]:before{background:#2e9e6b}.syn[data-s=w]:before{background:#d99a1c}.syn[data-s=err]:before{background:#c0392b}
+@media(max-width:700px){.syn{font-size:0;padding:6px}.syn:before{margin:0}}
+
+/* logo madrasah di halaman login: tanpa kotak, mengikuti bentuk logo asli */
+.logo{width:auto;height:auto;border-radius:0;background:none;border:0;padding:0;box-shadow:none;animation:none;backdrop-filter:none;display:block;overflow:visible;align-self:flex-start}
+.logo img{display:block;height:112px;width:auto;max-width:100%;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+@media(max-width:700px){.logo img{height:88px}}

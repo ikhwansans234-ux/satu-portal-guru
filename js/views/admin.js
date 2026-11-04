@@ -1,0 +1,43 @@
+/* Daftar Guru, Kelola Akun, Pengaturan, Profil, Log, Status Absensi */
+V.gur=function(){var sec=me.r==="admin";
+  return '<div class="ctrl"><input id="gq" placeholder="Cari nama / mata pelajaran..."></div><div class="sum" id="gsm"></div><div class="tw"><table><thead><tr><th>No</th><th>Nama</th><th>Jabatan</th><th>Mata Pelajaran</th><th>Kelas</th></tr></thead><tbody id="gt"></tbody></table></div>'};
+function gurRows(){var q=$("gq").value.toLowerCase(),sec=me.r==="admin",h="",n=0;
+  [YAYASAN].concat(GURU.slice().sort(function(a,b){return a.m.localeCompare(b.m)||a.n.localeCompare(b.n)})).forEach(function(g){if(q&&(g.n+g.m+g.j).toLowerCase().indexOf(q)<0)return;n++;
+    h+='<tr><td>'+n+'</td><td>'+esc(g.n)+'</td><td>'+g.j+'</td><td><b>'+esc(g.m)+'</b></td><td>'+(g.k.join(", ")||"-")+'</td>'+''+'</tr>'});
+  $("gt").innerHTML=h;$("gsm").innerHTML='<span class="chip">'+n+' orang</span>'}
+V.acc=function(){var g=editU?GURU.filter(function(x){return x.u===editU})[0]:null;g=g||{u:"",p:"",n:"",j:"Guru",r:"guru",m:"",k:[]};
+  return '<h3 style="margin-top:0">'+(editU?"Edit Akun":"Tambah Akun")+'</h3><div class="ctrl"><input id="an" placeholder="Nama lengkap + gelar" value="'+esc(g.n)+'"><input id="aj" placeholder="Jabatan" value="'+esc(g.j)+'"><select id="ar">'+["guru","admin","kepala"].map(function(r){return '<option'+(g.r===r?" selected":"")+'>'+r+'</option>'}).join("")+'</select><input id="am" placeholder="Mata pelajaran" value="'+esc(g.m)+'"></div><div style="margin:10px 0"></div><div class="ctrl"><input id="au" placeholder="Username" value="'+esc(g.u)+'"><input id="ap" placeholder="'+(editU?"Password baru (kosongkan jika tidak diubah)":"Password (min 6 karakter)")+'" value="" autocomplete="new-password"><button class="btn g" id="asave">Simpan</button>'+(editU?'<button class="btn o" id="acancel">Batal</button>':'')+'</div><h3>Daftar Akun</h3><div class="tw"><table><thead><tr><th>Nama</th><th>Peran</th><th>Mapel</th><th>Kelas</th><th>Status</th><th></th></tr></thead><tbody>'+GURU.map(function(x){return '<tr><td>'+esc(x.n)+'</td><td>'+x.r+'</td><td>'+esc(x.m)+'</td><td>'+(x.k.join(", ")||"-")+'</td><td>'+(x.off?'<span class="a">Nonaktif</span>':'<span class="h">Aktif</span>')+'</td><td style="white-space:nowrap"><button class="btn sm" data-ed="'+esc(x.u)+'">Edit</button> <button class="btn sm o" data-rs="'+esc(x.u)+'">Reset PW</button> <button class="btn sm" data-tg="'+esc(x.u)+'">'+(x.off?"Aktifkan":"Nonaktifkan")+'</button> <button class="btn sm r" data-rm="'+esc(x.u)+'">Hapus</button></td></tr>'}).join("")+'</tbody></table></div><p style="color:var(--muted);font-size:12px">Reset PW mengembalikan ke NamaDepan@2026. Perubahan tersimpan di browser perangkat ini.</p>'};
+V.set=function(){return '<h3 style="margin-top:0">Pengaturan Sekolah</h3><div class="ctrl"><input id="ss" value="'+esc(SET.sch)+'" placeholder="Nama madrasah"><input id="st" value="'+esc(SET.tp)+'" placeholder="Tahun pelajaran"><button class="btn g" id="ssave">Simpan</button></div>'};
+V.pro=function(){return '<h3 style="margin-top:0">'+esc(me.n)+'</h3><p style="color:var(--muted)">'+esc(me.j)+(me.m!=="-"?" \u00b7 "+esc(me.m):"")+' \u00b7 username: <b>'+esc(me.u)+'</b></p><h3>Ganti Password</h3><div class="ctrl"><input id="po" type="password" placeholder="Password lama"><input id="pn" type="password" placeholder="Password baru"><input id="pk" type="password" placeholder="Ulangi password baru"><button class="btn g" id="pwsave">Simpan</button></div>'};
+V.log=function(){return '<div class="ctrl"><button class="btn r" id="lclr">Hapus Log</button></div><div class="tw"><table><thead><tr><th>Waktu</th><th>Pengguna</th><th>Aktivitas</th></tr></thead><tbody>'+(LOG.slice().reverse().slice(0,100).map(function(l){return '<tr><td>'+esc(l.t)+'</td><td>'+esc(l.w)+'</td><td>'+esc(l.a)+'</td></tr>'}).join("")||'<tr><td colspan="3" style="color:var(--muted)">Belum ada aktivitas.</td></tr>')+'</tbody></table></div>'};
+function admClick(t){var D=t.dataset,find=function(u){return GURU.filter(function(x){return x.u===u})[0]};
+  if(t.id==="asave"){var u=$("au").value.trim().toLowerCase(),p=$("ap").value,n=$("an").value.trim();
+    var keepH=null;if(editU&&!p){var o0=find(editU);if(o0)keepH=o0.h}
+    if(keepH&&u!==editU){toast("Jika username diganti, isi juga password baru");return true}
+    if(!n||!u||(!keepH&&p.length<6)){toast("Nama, username, dan password (min 6 karakter) wajib diisi");return true}
+    var dup=find(u);if(dup&&dup.u!==editU){toast("Username sudah dipakai");return true}
+    var k=editU?find(editU).k.slice():($("ar").value==="admin"?[]:KELAS.slice());
+    var o={u:u,h:keepH||HP(u,p),n:n,j:$("aj").value.trim()||"Guru",r:$("ar").value,m:$("am").value.trim()||"-",k:k};
+    if(editU){var old=find(editU);o.off=old.off;if(me.u===editU)o.r=old.r;GURU[GURU.indexOf(old)]=o;if(me.u===editU)me=o}else GURU.push(o);
+    logA((editU?"Edit akun ":"Tambah akun ")+n);editU=null;persist();toast("Akun tersimpan");go("acc");return true}
+  if(t.id==="acancel"){editU=null;go("acc");return true}
+  if(D.ed){editU=D.ed;go("acc");return true}
+  if(D.rs){var g=find(D.rs);var np0=g.n.replace(/^Dr\.\s*/,"").split(/[ ,]/)[0]+"@2026";g.h=HP(g.u,np0);logA("Reset password "+g.n);persist();toast("Password direset: "+np0);go("acc");return true}
+  if(D.tg){var g2=find(D.tg);if(g2.u===me.u){toast("Tidak bisa menonaktifkan akun sendiri");return true}g2.off=!g2.off;logA((g2.off?"Nonaktifkan ":"Aktifkan ")+g2.n);persist();go("acc");return true}
+  if(D.rm){var g3=find(D.rm);if(g3.u===me.u||g3.r==="kepala"){toast("Akun ini tidak bisa dihapus");return true}GURU.splice(GURU.indexOf(g3),1);logA("Hapus akun "+g3.n);persist();go("acc");return true}
+  if(t.id==="ssave"){SET.sch=$("ss").value.trim()||SET.sch;SET.tp=$("st").value.trim()||SET.tp;$("school").textContent=SET.sch.toUpperCase();logA("Ubah pengaturan sekolah");persist();toast("Pengaturan tersimpan");return true}
+  if(t.id==="pwsave"){if(HP(me.u,$("po").value)!==me.h){toast("Password lama salah");return true}var np=$("pn").value;if(np.length<6){toast("Password baru minimal 6 karakter");return true}if(np!==$("pk").value){toast("Konfirmasi password tidak sama");return true}me.h=HP(me.u,np);logA("Ganti password sendiri");persist();toast("Password berhasil diganti");["po","pn","pk"].forEach(function(i){$(i).value=""});return true}
+  if(D.vw){sttDetail(D.vw);return true}
+  if(t.id==="lclr"){LOG=[];persist();go("log");return true}
+  return false}
+V.stt=function(){return '<div class="ctrl"><input type="date" id="st2" value="'+today+'"></div><div class="sum" id="s2"></div><div class="tw"><table><thead><tr><th>Kelas</th><th>Guru</th><th>Mata Pelajaran</th><th>Jam Pelajaran</th><th>Mulai</th><th>Selesai</th><th>Status</th><th></th></tr></thead><tbody id="sb2"></tbody></table></div><div id="dt"></div><p style="color:var(--muted);font-size:12px">Admin hanya bisa melihat. Absensi yang sudah dikirim guru tidak dapat diubah.</p>'};
+function sttRows(){var d=$("st2").value,day=DAYS[new Date(d+"T00:00:00").getDay()],h="",ok=0,n=0;
+  KELAS.forEach(function(k){GURU.filter(function(g){return g.r!=="admin"&&!g.off&&g.k.indexOf(k)>=0}).forEach(function(g){
+    var key=k+"|"+d+"|"+g.u,a=absen[key],sl=(JD(g)[day]||[]).filter(function(x){return x[2]===k})[0];
+    if(!a&&!sl)return;n++;if(a)ok++;
+    h+='<tr><td>'+k+'</td><td>'+esc(g.n)+'</td><td>'+esc(g.m)+'</td><td>'+(sl?sl[0]:"-")+'</td><td>'+(a?esc(a._m||"-"):"-")+'</td><td>'+(a?esc(a._s||a._t||"-"):"-")+'</td><td>'+(a?'<b class="h">Sudah diabsen</b>':'<b class="a">Belum</b>')+'</td><td>'+(a?'<button class="btn sm" data-vw="'+esc(key)+'">Lihat</button>':'')+'</td></tr>'})});
+  $("sb2").innerHTML=h||'<tr><td colspan="8" style="color:var(--muted)">Tidak ada jadwal mengajar atau absensi pada tanggal ini.</td></tr>';
+  $("dt").innerHTML="";$("s2").innerHTML='<span class="chip">'+day+'</span><span class="chip h">Sudah: '+ok+'</span><span class="chip a">Belum: '+(n-ok)+'</span><span class="chip">Total sesi: '+n+'</span>'}
+function sttDetail(key){var a=absen[key];if(!a)return;var p=key.split("|"),g=GURU.filter(function(x){return x.u===p[2]})[0]||{n:p[2],m:""},L={H:"Hadir",S:"Sakit",I:"Izin",A:"Alpa"};
+  $("dt").innerHTML='<h3>Detail Absensi Kelas '+p[0]+' \u00b7 '+esc(g.m)+' \u00b7 '+esc(g.n)+'</h3><span class="chip">Hanya lihat \u2014 tidak dapat diubah</span><div class="tw"><table><thead><tr><th>No</th><th>NIS</th><th>Nama</th><th>Status</th><th>Keterangan</th></tr></thead><tbody>'+R(p[0]).map(function(s,i){var v=a[s.nis]||{s:"-",k:""};return '<tr><td>'+(i+1)+'</td><td>'+s.nis+'</td><td>'+esc(s.nama)+'</td><td><b class="'+v.s.toLowerCase()+'">'+(L[v.s]||"-")+'</b></td><td>'+esc(v.k)+'</td></tr>'}).join("")+'</tbody></table></div>';
+  $("dt").scrollIntoView({behavior:"smooth"})}

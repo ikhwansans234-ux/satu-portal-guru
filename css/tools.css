@@ -1,0 +1,6 @@
+.tb{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:10px}
+.btn.line{background:transparent;color:var(--primary);border:1px solid var(--primary)}
+#ph{display:none}
+@media print{aside,.top,.toast,.tb,.ctrl,#login{display:none!important}body{background:#fff;color:#000}.card{margin:0;box-shadow:none;padding:0}
+#ph{display:block;margin-bottom:12px;line-height:1.5;border-bottom:2px solid #000;padding-bottom:8px}table{min-width:0}input.cell{border:0!important}}
+
