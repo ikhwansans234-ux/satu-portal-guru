@@ -1,0 +1,19 @@
+{
+  "name": "satu-portal-guru",
+  "version": "1.0.0",
+  "description": "SATU - Portal Guru MI Sa'adatuddarain II",
+  "scripts": {
+    "start": "node server.js",
+    "build:www": "node scripts/build-www.js",
+    "android:add": "npm run build:www && npx cap add android && npx cap sync android",
+    "android:sync": "npm run build:www && npx cap sync android",
+    "android:open": "npx cap open android"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

@@ -1,0 +1,7 @@
+{
+  "appId": "id.sch.satu.mi",
+  "appName": "SATU MI",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": false }
+}
